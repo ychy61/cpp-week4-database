@@ -58,6 +58,7 @@ Type typeCheck(std::string strType){
 
 //INT, DOUBLE, STRING 타입의 값을 입력받는 함수
 void *valueInput(Type type){
+      std::cin.sync();
       //value가 void 포인터 타입이므로 포인터로 값을 반환해야함
       if (type == INT) {
             //int 타입의 값을 가리키는 포인터를 생성함
@@ -76,9 +77,8 @@ void *valueInput(Type type){
       }
       if (type == STRING) {
             std::string *value = new std::string;
-
             std::cout << "Value: ";
-            std::cin >> *value;
+            std::getline(std::cin, *value);
 
             return value;
       }
@@ -86,6 +86,7 @@ void *valueInput(Type type){
 
 //ARRAY 타입의 값을 입력 받는 함수
 void *arrayInput(Type type){
+      std::cin.sync();
       if (type == ARRAY) {
             //value가 void 포인터 타입이므로 포인터로 값을 반환해야함
             //Array 타입의 값을 가리키는 포인터를 생성함
