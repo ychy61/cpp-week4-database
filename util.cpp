@@ -145,7 +145,7 @@ void *createArray(Type type, int size){
 
             std::string strValue;
             for(int i = 0; i < size; i++){
-                  std::cout << "item[" << i << "]";
+                  std::cout << "item[" << i << "]: ";
                   std::cin >> arr[i];
             }
 
