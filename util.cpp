@@ -90,28 +90,21 @@ void *arrayInput(Type type){
       if (type == ARRAY) {
             //value가 void 포인터 타입이므로 포인터로 값을 반환해야함
             //Array 타입의 값을 가리키는 포인터를 생성함
-            Array *value = new Array;
+            Array* array = new Array;
 
-            std::string strType;//문자열로 타입값을 받는 변수
-
-            int size;//배열의 사이즈
-
-            //타입을 입력받음
-            std::cout << "value: type (int, double, string, array): " ;
+            std::string strType;
+            std::cout << "value: type (int, double, string, array): ";
             std::cin >> strType;
 
-            //문자열로 입력받은 type을 typechek함수를 통해서 변환함
-            Type valueType = typeCheck(strType);
+            array->type = typeCheck(strType);
 
-            //유효한 type일때만 이어서 입력받음
-            if (valueType == INT || valueType == DOUBLE || valueType == STRING || valueType == ARRAY){
+            if (array->type == INT || array->type == DOUBLE || array->type == STRING || array->type == ARRAY) {
                   std::cout << "size: ";
-                  std::cin >> size;
-                  value->size = size;
-                  value->type = valueType;
-                  value->items = createArray(valueType,size);
-                  return value;
+                  std::cin >> array->size;
+                  array->items = createArray(array->type, array->size);
+                  return array;
             } else {
+                  delete array;
                   return nullptr;
             }
 
@@ -123,64 +116,38 @@ void *createArray(Type type, int size){
       //배열의 items가 void 포인터 타입이므로 포인터로 값을 반환해야함
       if (type == INT) {
             //int 타입의 배열을 가리키는 포인터를 생성함
-            int *arr = new int[size];
-
-            for(int i = 0; i < size; i++){
-                  std::cout << "item[" << i << "]: ";
-                  std::cin >> arr[i];
-            }
-
-            return arr;
-      } else if (type == DOUBLE){
-            double *arr = new double[size];
-
-            for(int i = 0; i < size; i++){
-                  std::cout << "item[" << i << "]: ";
-                  std::cin >> arr[i];
-            }
-
-            return arr;
-
-      } else if (type == STRING) {
-            std::string *arr = new std::string[size];
-
-            std::string strValue;
-            for(int i = 0; i < size; i++){
-                  std::cout << "item[" << i << "]: ";
-                  std::cin >> arr[i];
-            }
-
-            return arr;
-      }
-      else if (type == ARRAY){
-            //각 배열 원소의 포인터를 지시하기 위해 Array타입의 이중 포인터를 생성함
-            Array **arr = new Array*[size];
+            int* arr = new int[size];
             for (int i = 0; i < size; ++i) {
                   std::cout << "item[" << i << "]: ";
-                  //각 원소에 대한 배열을 입력받기 위해 createMultiArray함수 호출
-                  arr[i] = (Array*)createMultiArray();
+                  std::cin >> arr[i];
             }
-
+            return arr;
+      } else if (type == DOUBLE) {
+            double* arr = new double[size];
+            for (int i = 0; i < size; ++i) {
+                  std::cout << "item[" << i << "]: ";
+                  std::cin >> arr[i];
+            }
+            return arr;
+      } else if (type == STRING) {
+            std::string* arr = new std::string[size];
+            for (int i = 0; i < size; ++i) {
+                  std::cout << "item[" << i << "]: ";
+                  std::cin >> arr[i];
+            }
+            return arr;
+      } else if (type == ARRAY) {
+            //각 배열 원소의 포인터를 지시하기 위해 Array타입의 이중 포인터를 생성함
+            Array** arr = new Array*[size];
+            for (int i = 0; i < size; ++i) {
+                  std::cout << "item[" << i << "]: ";
+                  //각 원소에 대한 배열을 입력받기 위해 arrayInput함수 호출
+                  arr[i] = (Array*)arrayInput(type);
+                  if (arr[i] == nullptr){
+                        delete arr;
+                        break;
+                  }
+            }
             return arr;
       }
-
 }
-
-//다중배열 시 각 원소의 배열을 생성
-void *createMultiArray(){
-      int size;
-      std::string typeStr;
-
-      // 사용자로부터 배열의 타입을 입력 받음
-      std::cout << "type (int, double, string, array): ";
-      std::cin >> typeStr;
-
-      Type type = typeCheck(typeStr);
-      // 사용자로부터 배열의 크기를 입력 받음
-      std::cout << "size: ";
-      std::cin >> size;
-
-      // createArray() 함수 호출하여 배열 생성 후 반환
-      return createArray(type, size);
-}
-

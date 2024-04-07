@@ -18,36 +18,34 @@ void listPrint(Database &database) {
                   Array* arr = (Array*)(database.entries[i].value);
 
                   //출력 형식에 맞게 대괄호 추가함
-                  std::cout << "[";
                   arrayPrint(arr);
-
-                  std::cout << "]" << std::endl;
             }
       }
 }
 
-//배열을 출력한다.
-void arrayPrint(Array* arr){
-      for (int j = 0; j < arr->size; ++j) {
-            if (j > 0) {
+void arrayPrint(Array* array) {
+      std::cout << "[";
+      for (int i = 0; i < array->size; ++i) {
+            if (array->type == INT) {
+                  int* items = static_cast<int*>(array->items);
+                  std::cout << items[i];
+            } else if (array->type == DOUBLE) {
+                  double* items = static_cast<double*>(array->items);
+                  std::cout << items[i];
+            } else if (array->type == STRING) {
+                  std::string* items = static_cast<std::string*>(array->items);
+                  std::cout << "\"" << items[i] << "\"";
+            } else if (array->type == ARRAY) {
+                  Array** items = static_cast<Array**>(array->items);
+                  if (array->items == ""){
+                        break;
+
+                  }
+                  arrayPrint(items[i]);
+            }
+            if (i < array->size - 1) {
                   std::cout << ", ";
             }
-            if (arr->type == INT) {
-                  std::cout << *((int*)(arr->items) + j);
-            } else if (arr->type == DOUBLE) {
-                  std::cout << *((double*)(arr->items) + j);
-            } else if (arr->type == STRING) {
-                  std::cout << "\"" << *((std::string*)(arr->items) + j) << "\"";
-            } else if (arr->type == ARRAY) {
-
-                  std::cout << "[";
-                  for (int i = 0; i < arr->size; ++i) {
-                        if (i > 0) {
-                        std::cout << ", ";
-                        }
-                              arrayPrint(((Array**)(arr->items))[i]); // 재귀 호출로 다음 차원의 배열 출력
-                  }
-                  std::cout << "]";
-            }
       }
+      std::cout << "]";
 }
