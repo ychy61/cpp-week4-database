@@ -24,4 +24,5 @@ exit.o: exit.cpp database.h
 get.o: get.cpp database.h
 	g++ ${FLAGS} -c get.cpp
 
-
+clean:
+	rm -rf *.o main.exe
