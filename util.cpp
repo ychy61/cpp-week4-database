@@ -102,8 +102,12 @@ void *arrayInput(Type type){
                   std::cout << "size: ";
                   std::cin >> array->size;
                   array->items = createArray(array->type, array->size);
+                  if (array->items == nullptr){
+                        delete array;
+                        return nullptr;
+                  }
                   return array;
-            } else {
+            }else {
                   delete array;
                   return nullptr;
             }
@@ -144,8 +148,7 @@ void *createArray(Type type, int size){
                   //각 원소에 대한 배열을 입력받기 위해 arrayInput함수 호출
                   arr[i] = (Array*)arrayInput(type);
                   if (arr[i] == nullptr){
-                        delete arr;
-                        break;
+                        return nullptr;
                   }
             }
             return arr;
