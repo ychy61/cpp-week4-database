@@ -31,22 +31,24 @@ void entryPrint(Entry *entry){
             std::cout << "\"" << *(std::string*)(entry -> value) <<  "\"" << std::endl;
       } else if (entry -> type == ARRAY) {
             Array* arr = (Array*)(entry -> value);
-            std::cout << "[";
-                  for (int j = 0; j < arr->size; ++j) {
-                  if (j > 0) {
-                        std::cout << ", ";
-                  }
-                  if (arr->type == INT) {
-                        std::cout << *((int*)(arr->items) + j);
-                  } else if (arr->type == DOUBLE) {
-                        std::cout << *((double*)(arr->items) + j);
-                  } else if (arr->type == STRING) {
-                        //출력 형식에 맞게 따옴표 추가
-                        std::cout << "\"" << *((std::string*)(arr->items) + j) << "\"";
-                  } else if (arr->type == ARRAY) {
-                        arrayPrint((Array*)(arr->items));
-                  }
-            }
-            std::cout << "]" << std::endl;
+            arrayPrint((Array*)(arr));
+            std::cout << std::endl;
+            // std::cout << "[";
+            //       for (int j = 0; j < arr->size; ++j) {
+            //       if (j > 0) {
+            //             std::cout << ", ";
+            //       }
+            //       if (arr->type == INT) {
+            //             std::cout << *((int*)(arr->items) + j);
+            //       } else if (arr->type == DOUBLE) {
+            //             std::cout << *((double*)(arr->items) + j);
+            //       } else if (arr->type == STRING) {
+            //             //출력 형식에 맞게 따옴표 추가
+            //             std::cout << "\"" << *((std::string*)(arr->items) + j) << "\"";
+            //       } else if (arr->type == ARRAY) {
+            //             arrayPrint((Array*)(arr));
+            //       }
+            // }
+            // std::cout << "]" << std::endl;
       }
 }

@@ -19,6 +19,7 @@ void listPrint(Database &database) {
 
                   //출력 형식에 맞게 대괄호 추가함
                   arrayPrint(arr);
+                  std::cout << std::endl;
             }
       }
 }
@@ -39,7 +40,6 @@ void arrayPrint(Array* array) {
                   Array** items = static_cast<Array**>(array->items);
                   if (array->items == ""){
                         break;
-
                   }
                   arrayPrint(items[i]);
             }

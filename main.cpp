@@ -21,7 +21,6 @@ int main(){
                               add(db, entry);
                         }
 
-
                   } else if (type == INT || type == DOUBLE || type == STRING){
                         value = valueInput(type);
                         Entry *entry = create(type, key, value);
